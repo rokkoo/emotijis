@@ -3,7 +3,7 @@ import * as faceapi from "face-api.js";
 
 const useVideo = () => {
   const [element, setElement] = useState(null);
-  const [ready, setReay] = useState(false);
+  const [canvas, setCanvas] = useState(<canvas></canvas>);
 
   const loadModels = async () => {
     const MODEL_URL = process.env.PUBLIC_URL + "/models";
@@ -16,25 +16,33 @@ const useVideo = () => {
     await faceapi.nets.ageGenderNet.loadFromUri('/models')
   };
 
-  const predic = async () => {
-    await loadModels();
-    let description = await faceapi
-    .detectAllFaces(element)
-    .withFaceLandmarks(true)
-    .withFaceDescriptors();
-
-    const detenctions = await faceapi.detectSingleFace(element).withFaceLandmarks().withAgeAndGender().withFaceDescriptor()
-    console.log(detenctions)
-  };
 
   useEffect(() => {
+    const predicElement = async () => {
+      await loadModels();
+  
+      // let description = await faceapi
+      // .detectAllFaces(element)
+      // .withFaceLandmarks(true)
+      // .withFaceDescriptors();
+  
+      const detenctions = await faceapi.detectSingleFace(element).withFaceLandmarks().withAgeAndGender().withFaceDescriptor()
+
+      // const displaySize = { width: element.width, height: element.height }
+      // faceapi.matchDimensions(canvas, displaySize)
+      // // resize the detected boxes in case your displayed image has a different size than the original
+      // const resizedDetections = faceapi.resizeResults(detenctions, displaySize)
+      // setCanvas(faceapi.draw.drawDetections(canvas, resizedDetections))
+
+      console.log(detenctions)
+    };
+
     if (element) {
-      setReay(true);
-      predic();
+      predicElement();
     }
   }, [element]);
 
-  return [setElement, ready];
+  return [setElement, canvas];
 };
 
 export default useVideo;
