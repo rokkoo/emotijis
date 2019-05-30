@@ -1,24 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef, useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import useVideo from "./useVideo";
+import happy from "./happy.jpg";
+
+import "./styles.css";
+
+function useLoading() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => setLoading(false), []);
+  return loading;
+}
+
+function UseVideoComponent() {
+  const [video, videoStream] = useVideo();
+  const [img, imgStream] = useVideo();
+  //<video ref={video} width="300" height="300" />
+
+  return (
+    <>
+      <img ref={img} width="300" height="300" src={happy} alt="" hidden />
+    </>
+  );
+}
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => setLoading(false), []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <UseVideoComponent />
     </div>
   );
 }
