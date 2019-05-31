@@ -43,7 +43,7 @@ const useVideo = () => {
 
     if (element) {
       setInterval(() => {
-        element.playbackRate = 1.25;
+        element.playbackRate = 0.5;
         isModelLoaded ? predicElement() : loadModels();
         // predicElement();
       }, 100);

@@ -55,13 +55,14 @@ const Section = ({ Element }) => {
         </section>
       ) : (
         <section className="loadingModel">
-          <CircleLoader
+          {/* <CircleLoader
             css={override}
             sizeUnit={"px"}
             size={90}
             color={"white"}
             loading={true}
-          />
+          /> */}
+          <p>Prediciendo...</p>
         </section>
       )}
     </div>
